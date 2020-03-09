@@ -1,7 +1,7 @@
 {
   "name": "xclydes/keepassphp",
   "type": "library",
-  "minimum-stability": "dev",
+  "minimum-stability": "master",
   "description": "A library for reading KeePass 2.x databases",
   "license": "MIT",
   "keywords": [
