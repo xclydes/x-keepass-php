@@ -4,6 +4,8 @@
 namespace KeePassPHP\Lib;
 
 
+use KeePassPHP\Util\GZDecode;
+
 class Binary
 {
 
@@ -14,10 +16,6 @@ class Binary
      * @var integer
      */
     private $_id;
-    /**
-     * @var string|null
-     */
-    private $name;
     /**
      * @var boolean
      */
@@ -33,7 +31,7 @@ class Binary
      * @param bool $compressed
      * @param string|null $_rawContent
      */
-    public function __construct($input, $compressed = false, $_rawContent = null, $name = null)
+    public function __construct($input, $compressed = false, $_rawContent = null)
     {
         //If the input is a binary
         if ($input instanceof Binary) {
@@ -41,31 +39,12 @@ class Binary
             $this->_id = $input->_id;
             $this->compressed = $input->compressed;
             $this->_rawContent = $input->_rawContent;
-            $this->name = $input->name;
         } else {
             //Setup this is an independent instance
             $this->_id = $input;
             $this->compressed = $compressed;
             $this->_rawContent = $_rawContent;
-            $this->name = $name;
         }
-    }
-
-    /**
-     * The name assigned to this binary
-     * @return string|null
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -96,7 +75,10 @@ class Binary
     {
         $c = $this->getRawContent();
         if ($this->isCompressed()) {
+            $filename = '';
+            $error = '';
             //TODO what compression is this?
+            $c = GZDecode::gzdecode2($c, $filename, $error);
         }
         return $c;
     }

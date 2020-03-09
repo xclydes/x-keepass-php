@@ -149,34 +149,21 @@ class Entry
             } elseif ($reader->isElement(Database::XML_STRING_VALUE)) {
                 $ref = $reader->readAttribute('Ref');
                 //If there is a ref attribute and context
-                if ($ref != null && $context) {
-                    //Resolve the binary against the database
-                    $existingBinaries = $context->getBinaries();
-                    if (is_array($existingBinaries)) {
-                        //Find the binary
-                        foreach ($existingBinaries as $existingBinary) {
-                            //If the ID matches the ref
-                            if ($existingBinaries && $existingBinary->getId() == $ref) {
-                                //Copy this one
-                                $value = $existingBinary;
-                                //Stop searching
-                                break;
-                            }
-                        }
-                    }
+                if ($ref != null && $context != null) {
+                    //Get the instance with the ID specified
+                    $value = BinaryRef::resolve($context, $ref);
                 } else {
                     //Use its content
                     $value = Binary::loadFromXML($reader, $context);
                 }
             }
         }
+        //if successfully resolved
         if ($value != null) {
-            //Create a copy
-            $copy = new Binary($value);
             //Update the name
-            $copy->setName($key);
+            $value->setName($key);
             //Push it into the array
-            array_push($this->binaries, $copy);
+            array_push($this->binaries, $value);
         }
     }
 
