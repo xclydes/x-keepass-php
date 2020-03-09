@@ -1,0 +1,41 @@
+{
+  "name": "xclydes/keepassphp",
+  "type": "library",
+  "description": "A library for reading KeePass 2.x databases",
+  "license": "MIT",
+  "keywords": [
+    "keepass",
+    "password",
+    "manager",
+    "security",
+    "encryption",
+    "openssl",
+    "cipher",
+    "cryptography",
+    "crypto",
+    "encrypt"
+  ],
+  "authors": [
+    {
+      "name": "Jermaine Rattray",
+      "email": "xclydes@xclydes.com",
+      "homepage": "https://xclydes.com/"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "KeePassPHP\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=5.3.0",
+    "ext-hash": "*",
+    "ext-json": "*",
+    "ext-xmlreader": "*",
+    "ext-zlib": "*"
+  },
+  "suggest": {
+    "ext-mcrypt": "An alternative to the preferred OpenSSL encryption",
+    "ext-openssl": "A better and faster alternative to mcrypt"
+  }
+}
