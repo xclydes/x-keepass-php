@@ -71,6 +71,9 @@ class Binary
         return $this->_rawContent;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent()
     {
         //Decode the base 64 string
@@ -79,7 +82,12 @@ class Binary
             $filename = '';
             $error = '';
             //Decompress the content
-            $c = GZDecode::gzdecode2($c, $filename, $error);
+            $gzDecode = GZDecode::gzdecode2($c, $filename, $error);
+            //If there is no error
+            if (!$error) {
+                //Return the decoded content
+                $c = $gzDecode;
+            }
         }
         return $c;
     }
