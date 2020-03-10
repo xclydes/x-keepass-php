@@ -73,11 +73,12 @@ class Binary
 
     public function getContent()
     {
-        $c = $this->getRawContent();
+        //Decode the base 64 string
+        $c = base64_decode($this->getRawContent());
         if ($this->isCompressed()) {
             $filename = '';
             $error = '';
-            //TODO what compression is this?
+            //Decompress the content
             $c = GZDecode::gzdecode2($c, $filename, $error);
         }
         return $c;
