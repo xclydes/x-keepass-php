@@ -383,6 +383,12 @@ class KdbxFile
             && $header->randomStream !== 0;
     }
 
+    /**
+     * Checks the file given to determine if the start bytes match the
+     * expected sequence
+     * @param $filePath the file to be checked
+     * @return bool Do the magic bytes match
+     */
     public static function isAnArchive($filePath)
     {
         $isKdbx = false;
