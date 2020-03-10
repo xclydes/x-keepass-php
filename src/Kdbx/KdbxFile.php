@@ -382,6 +382,31 @@ class KdbxFile
             && $header->randomStreamKey !== null
             && $header->randomStream !== 0;
     }
+
+    public static function isAnArchive($filePath)
+    {
+        $isKdbx = false;
+        try {
+            // Opening the file in read-only mode
+            $possibleFile = fopen($filePath, "rb");
+            try {
+                // Read the first 40 bytes
+                $magicBytes = fread($possibleFile, 41);
+                //Create a hex string
+                $hex = strtoupper(bin2hex($magicBytes));
+                //Expected sequence
+                $expected = "03D9A29A67FB4BB50100030002100031C1F2E6BF714350BE5805216AFC5AFF03040001000000042000";
+                $isKdbx = $expected == $hex;
+            } catch (Exception $exception) {
+                //TODO What to do with this?
+            }
+            // close the file
+            fclose($possibleFile);
+
+        } catch (Exception $e) {
+            //TODO What to do with this?
+        }
+        return $isKdbx;
+    }
 }
 
-?>
